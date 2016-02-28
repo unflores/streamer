@@ -30,5 +30,5 @@ Here is some client code for using the sockets service:
     });
     
 ## Send out updates
-
-   curl -XPOST 'http://localhost:8081/group/5' -H "Content-Type: application/json" -d '{"id":"5","title":"other info"}'
+    
+    curl -XPOST 'http://localhost:8081/group/5' -H "Content-Type: application/json" -d '{"id":"5","title":"other info"}'
