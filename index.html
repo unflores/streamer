@@ -1,10 +1,10 @@
-  <script src="http://streamer.dev:9090/socket.io/socket.io.js"></script>
+  <script src="http://localhost:9090/socket.io/socket.io.js"></script>
   <script>
-    var socket = io.connect('http://streamer.dev:9090');
+    var socket = io.connect('http://localhost:9090');
 
     socket.on('declare_room', function(data){
       console.log('declared my room');
-      socket.emit('subscribe', {room: 'run_5'});
+      socket.emit('subscribe', {room: 'group_5'});
     });
 
     socket.on('updates', function (data) {

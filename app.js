@@ -11,17 +11,25 @@ var io        = require('socket.io').listen(9090),
     express   = require('express'),
     app       = express(),
     url       = require('url'),
-    _         = require('underscore'),
+    bodyParser= require('body-parser'), // Parses Html Body
     io_client = require('socket.io-client').connect('localhost', { port: 9090 }),
     channels  = [];
 
 
 // Manage Incoming http requests
-app.configure(function(){
-  app.use(express.bodyParser());
-});
+
+app.use(bodyParser.urlencoded({'extended':'true'}));            // Parse extended utf urls
+app.use(bodyParser.json());                                     // Parse application/json
+app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // Parse incoming data as json
 
 
+/* route examples => broadcast id
+ *  /dev_order/5/ => dev_order_5
+ *  /user/385/    => user_385
+ *  /group/21/    => group_21
+ *
+ *  This will allow you to namespace your rooms by some name and an id.
+ */
 app.post(/([^\/]+)\/(\d+)/, function(req, res){
   if(req.ip !== '127.0.0.1'){
     res.send("ERROR: Invalid Source.\n");
@@ -36,9 +44,7 @@ app.post(/([^\/]+)\/(\d+)/, function(req, res){
 app.listen(8081);
 
 
-
 // Socket Management
-
 io.sockets.on('connection', function (client) {
   console.log('Connected to streamer');
 
