@@ -1,9 +1,12 @@
 The sockets service allows for the relaying of json messages in realtime to client sockets subscribed to specific rooms.  Messages are sent to the system via an http server.
 
+## Setup
 
-To start:
-
-    forever start streamer/app.js environment
+    mkdir ~/streamer
+    git clone git@github.com:unflores/streamer.git ./
+    sudo apt-get install nodejs
+    sudo apt-get install npm
+    npm install
     
 ## Client Sockets
 
@@ -11,7 +14,7 @@ Here is some client code for using the sockets service:
 
     // Connect to the socket server.  This assumes it is running on port 9090 on streamer.dev
     var env = 'blah';
-    var socket = io.connect('http://streamer.dev:9090');
+    var socket = io.connect('http://localhost:9090');
 
     // Listen for the declare_room event
     socket.on('declare_room', function(data){
@@ -28,4 +31,4 @@ Here is some client code for using the sockets service:
     
 ## Send out updates
 
-   curl -XPOST 'http://streamer.dev:8081/environmentfoot/5' -H "Content-Type: application/json" -d '{"id":"5","title":"other info"}'
+   curl -XPOST 'http://localhost:8081/group/5' -H "Content-Type: application/json" -d '{"id":"5","title":"other info"}'
